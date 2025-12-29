@@ -26,6 +26,6 @@
   "python.analysis.diagnosticMode": "workspace",
 
   "files.exclude": {
-    "**/.vscode": true
+    "**/.vscode": false
 }
 }
