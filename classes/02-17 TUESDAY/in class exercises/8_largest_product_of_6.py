@@ -1,91 +1,3 @@
-# %%
-# # In-Class Function Exercises
-
-# %%
-def sum_n(n):
-    """
-    Return the sum of the integers from 1 to n inclusive.
-    Assume n is a non-negative integer.
-    Example:
-    sum_n(5) -> 15
-    sum_n(0) -> 0
-    """
-    pass
-
-# %%
-def factorial(n):
-    """
-    Return n factorial (n!).
-    Assume n is a non-negative integer.
-    Example:
-    factorial(5) -> 120
-    factorial(0) -> 1
-    """
-    pass
-
-# %%
-def fibonacci(n):
-    """
-    Return the nth term in the Fibonacci sequence.
-    Assume:
-    fibonacci(0) -> 0
-    fibonacci(1) -> 1
-    Example:
-    fibonacci(6) -> 8
-    Use a loop (not recursion).
-    """
-    pass
-
-# %%
-def flatten_3x3(matrix):
-    """
-    Given a 3x3 list of lists, return a flat list
-    containing all 9 elements in row-major order.
-    Example:
-    [[1,2,3],
-     [4,5,6],
-     [7,8,9]]
-    -> [1,2,3,4,5,6,7,8,9]
-    """
-    pass
-
-# %%
-def reshape_to_square(lst):
-    """
-    Given a flat list whose length is n^2,
-    return a list of lists representing an n x n matrix.
-    Example:
-    [1,2,3,4]
-    -> [[1,2],[3,4]]
-    You may assume the length is a perfect square.
-    """
-    pass
-
-# %%
-def ith_prime(i):
-    """
-    Return the ith prime number.
-    Assume:
-    ith_prime(1) -> 2
-    ith_prime(2) -> 3
-    ith_prime(3) -> 5
-    You may write a helper function if needed.
-    """
-    pass
-
-# %%
-def is_prime(n):
-    """
-    Return True if n is prime.
-    Return False otherwise.
-    Assume n is a positive integer.
-    Example:
-    is_prime(2) -> True
-    is_prime(15) -> False
-    """
-    pass
-
-# %%
 def largest_product_of_6(s):
     """
     Given a string of digits (length >= 6),
@@ -97,7 +9,7 @@ def largest_product_of_6(s):
 # How to read in a multi line string with \n's (line returns)
 # into one continuous string with no \n's or whitespace
 # ------------------------------------------
-# VERSION 1 â€” Raw multi-line string
+# VERSION 1 — Raw multi-line string
 # ------------------------------------------
 
 '''
@@ -151,7 +63,7 @@ print(digits_raw)
 
 
 # ------------------------------------------
-# VERSION 2 â€” Remove only newline characters
+# VERSION 2 — Remove only newline characters
 # ------------------------------------------
 
 digits_no_newlines = digits_raw.replace("\n", "")
@@ -161,24 +73,10 @@ print(digits_no_newlines)
 
 
 # ------------------------------------------
-# VERSION 3 â€” Remove ALL whitespace (safest)
+# VERSION 3 — Remove ALL whitespace (safest)
 # ------------------------------------------
 
 digits_clean = ''.join(digits_raw.split())
 
 print("\nREMOVE ALL WHITESPACE VERSION:")
 print(digits_clean)
-
-# %%
-def word_histogram(text):
-    """
-    Given a string of text, return a dictionary
-    mapping each word to its frequency.
-    Assume:
-    - Words are separated by whitespace.
-    - Convert words to lowercase.
-    - Ignore punctuation.
-    Example:
-    "apple banana apple" -> {'apple': 2, 'banana': 1}
-    """
-    pass
