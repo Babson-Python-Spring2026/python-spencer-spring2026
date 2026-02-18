@@ -7,4 +7,11 @@ def reshape_to_square(lst):
     -> [[1,2],[3,4]]
     You may assume the length is a perfect square.
     """
-    pass
+    import math
+    n = int(math.sqrt(len(lst)))
+    matrix = []
+    for i in range(0, len(lst), n):
+        matrix.append(lst[i:i+n])
+    return matrix
+
+print(reshape_to_square([1,2,3,4]))  # [[1,2],[3,4]]

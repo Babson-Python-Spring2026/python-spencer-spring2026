@@ -8,4 +8,10 @@ def flatten_nxn(matrix):
      [7,8,9]]
     -> [1,2,3,4,5,6,7,8,9]
     """
-    pass
+    flat = []
+    for row in matrix:
+        for item in row:
+            flat.append(item)
+    return flat
+
+print(flatten_nxn([[1,2,3],[4,5,6],[7,8,9]]))

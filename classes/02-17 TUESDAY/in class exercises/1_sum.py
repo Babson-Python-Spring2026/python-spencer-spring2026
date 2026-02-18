@@ -6,4 +6,10 @@ def sum_n(n):
     sum_n(5) -> 15
     sum_n(0) -> 0
     """
-    pass
+    total = 0
+    for i in range(1, n + 1):
+        total += i
+    return total
+
+print(sum_n(5))  # 15
+print(sum_n(0))  # 0

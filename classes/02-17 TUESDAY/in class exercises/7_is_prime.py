@@ -7,4 +7,13 @@ def is_prime(n):
     is_prime(2) -> True
     is_prime(15) -> False
     """
-    pass
+    if n < 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+print(is_prime(2))   # True
+print(is_prime(15))  # False
+print(is_prime(17))  # True
