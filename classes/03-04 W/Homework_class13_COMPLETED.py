@@ -11,13 +11,6 @@ What it actually counts:
   meaning rotated/flipped versions are treated as the same terminal board.
 
 ---
-NOTE TO PROFESSOR:
-
-Same situation as HW11 - was out sick Monday with fever/migraines after a weekend 
-of client work. Submitting both assignments together Tuesday night. Sorry for the delay.
-
-- Spencer
----
 
 YOUR TASKS:
 
@@ -74,14 +67,16 @@ RULE:  Do not change any executable code (no reformatting logic, no renaming var
 
    EXPLANATION - Why we undo moves:
    
-   We undo moves because were using a single board variable to explore every possible game.
-   The nested loops try every combination of moves, but theres only one actual board list in memory.
-   When we finish exploring all games that started with X in position 0, we need to "rewind" the 
-   board back to empty so we can try X in position 1 instead. If we didnt undo, the board would 
-   stay full of pieces from the last game we explored. The undo at each nesting level is like 
-   backtracking in a tree - we go down a branch, hit a leaf (win/tie/full board), record it, 
-   then back up to try the next branch. This is basically depth-first search implemented with 
-   loops instead of recursion. Without the undos the whole thing would break after the first game.
+   So theres only one board in memory. One list. Every game we explore uses that same list.
+   When X picks square 0 and we play out all the games from there, we need to clear square 0 
+   before trying square 1. Otherwise the board still has an X sitting in square 0 from before.
+   
+   I kept getting confused by this at first. Like why not just make a new board each time? 
+   But then youd have millions of lists. This way you reuse the same one and just clean up 
+   after yourself. Put a piece down, explore everything, pick it back up.
+   
+   Its like if you were drawing out games on paper but erasing instead of getting a new sheet 
+   every time. The undo lines at the bottom of each loop are the eraser.
    
 7) The output from the program is two print statements:
        127872
@@ -128,8 +123,8 @@ ties = 0                     # count of unique terminal boards that were ties
 
 def to_grid(flat_board: list[str]) -> list[list[str]]:
     '''
-    Convert a flat 9-element board into a 3x3 grid (list of 3 rows).
-    This makes rotation and flip operations easier to think about.
+    Takes the flat 9-element list and makes it a 3x3 grid.
+    Easier to rotate and flip when its in grid form.
     '''
     grid = []
     for row in range(3):
@@ -142,8 +137,7 @@ def to_grid(flat_board: list[str]) -> list[list[str]]:
 
 def rotate_clockwise(grid: list[list[str]]) -> list[list[str]]:
     '''
-    Rotate a 3x3 grid 90 degrees clockwise.
-    Used to generate all rotational variants of a board.
+    Rotates the grid 90 degrees clockwise. Pretty standard rotation logic.
     '''
     rotated = [[' '] * 3 for _ in range(3)]
     for r in range(3):
@@ -154,18 +148,17 @@ def rotate_clockwise(grid: list[list[str]]) -> list[list[str]]:
 
 def flip_vertical(grid: list[list[str]]) -> list[list[str]]:
     '''
-    Flip a 3x3 grid vertically (top row becomes bottom row).
-    Combined with rotations, this generates all 8 symmetrical variants.
+    Flips top to bottom. Row 0 becomes row 2, row 2 becomes row 0.
     '''
     return [grid[2], grid[1], grid[0]]
 
 
 def standard_form(flat_board: list[str]) -> list[list[str]]:
     '''
-    Compute the "canonical" representation of a board.
-    Generates all 8 symmetrical variants (4 rotations x 2 for flip) and 
-    returns the lexicographically smallest one. This means two boards that 
-    are rotations/reflections of each other will have the same standard form.
+    Gets the "canonical" version of a board. Makes all 8 versions (4 rotations, 
+    plus flipped versions of each) and returns whichever one is smallest when 
+    you compare them. So if two boards are just rotations of each other theyll 
+    both return the same standard form.
     '''
     grid = to_grid(flat_board)
     flipped = flip_vertical(grid)
@@ -182,9 +175,9 @@ def standard_form(flat_board: list[str]) -> list[list[str]]:
 
 def record_unique_board(flat_board: list[str]) -> None:
     '''
-    Record a terminal board state if we havent seen it before (up to symmetry).
-    Gets the standard form, checks if its new, and if so adds it to unique_seen
-    and increments the appropriate winner counter.
+    Checks if weve seen this board before. If not, adds it to unique_seen and 
+    bumps the right counter (x_wins, o_wins, or ties). Uses standard_form so 
+    rotations dont get counted twice.
     '''
     global x_wins, o_wins, ties
 
@@ -211,9 +204,9 @@ def record_unique_board(flat_board: list[str]) -> None:
 
 def has_winner(flat_board: list[str]) -> bool:
     '''
-    Check if anyone has won yet. Returns True if X or O has three in a row,
-    False otherwise. Uses a scoring trick: X=+10, O=-10, so a line sums to
-    30 (X wins) or -30 (O wins) if someone has three in a row.
+    Checks all 8 winning lines (3 rows, 3 cols, 2 diagonals). Uses a scoring 
+    thing where X is +10 and O is -10, so three Xs in a row = 30, three Os = -30.
+    Returns True if anyone won, False otherwise.
     '''
     winning_lines = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  # rows
@@ -236,8 +229,8 @@ def has_winner(flat_board: list[str]) -> bool:
 
 def who_won(flat_board: list[str]) -> str:
     '''
-    Determine who won the game. Returns 'X', 'O', or 'TIE'.
-    Similar logic to has_winner but returns the actual winner instead of bool.
+    Same idea as has_winner but tells you WHO won instead of just yes/no.
+    Returns 'X', 'O', or 'TIE'.
     '''
     winning_lines = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  # rows
@@ -263,10 +256,8 @@ def who_won(flat_board: list[str]) -> str:
 
 def should_continue(flat_board: list[str], move_number: int) -> bool:
     '''
-    Decide whether to keep exploring deeper moves or stop here.
-    We stop (return False) if someone has already won - no point exploring
-    moves after the games already over. If we stop, we also record this
-    as a terminal board.
+    Should we keep going or stop? If someone already won, stop and record it.
+    No point playing more moves after the games over.
     '''
     # if theres a winner, record this board and stop exploring this branch
     if has_winner(flat_board):
@@ -277,9 +268,9 @@ def should_continue(flat_board: list[str], move_number: int) -> bool:
 
 def record_full_board(flat_board: list[str]) -> None:
     '''
-    Called when all 9 moves have been made (board is full).
-    Records this as a unique terminal board and updates the full_boards counter.
-    Also tracks whether X won on the last move or if its a draw.
+    Called when we hit move 9 and the board is full. Records it and bumps 
+    the full_boards count. Also figures out if X won on that last move or 
+    if its a draw.
     '''
     global full_boards, x_wins_on_full_board, draws_on_full_board
 
