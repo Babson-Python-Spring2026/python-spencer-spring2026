@@ -38,6 +38,54 @@ The left hand side (LHS) is provided below. Your job:
 
 4) How many discrete paths are in this menu system
 '''
+
+'''
+===================================================================================
+PART 2: STI EXPLANATION
+===================================================================================
+
+What the program does:
+This is a nested menu system that lets users navigate through different options.
+You start at the top level and drill down into submenus until you hit a "leaf" 
+(an endpoint with no more choices). Then you work your way back up.
+
+STATE:
+The main state is basically "where am I in the menu tree". But heres the thing -
+theres no explicit state variable tracking the level. The state is implicit in which
+while loop youre currently inside. If youre in the innermost while loop under
+Clients > Select Client, thats your state. The `choice` variable holds the most
+recent selection but it gets reused at every level so its not really tracking
+overall state.
+
+The `to_top` flag is different though - thats an explicit state variable I added
+for the return-to-top feature. It acts like a signal that propagates up through
+the nested loops. When its True, each loop checks it and breaks immediately.
+
+TRANSITIONS:
+- Selecting a numbered option (1 or 2) transitions you deeper into the menu
+- Pressing Enter with no input (returns None) triggers a break which transitions
+  you back up one level
+- The continue statement keeps you at the current level after hitting a leaf
+- Setting to_top = True at a leaf causes a chain of breaks that unwinds all the 
+  way back to level 1 (where to_top gets reset to False)
+
+INVARIANTS:
+- Each menu level always shows a header, displays options, and waits for input
+- A break statement only exits ONE while loop - it cant skip multiple levels
+  (this tripped me up at first, I thought break would go all the way back)
+- You can only move one level at a time in either direction
+
+Does control come from logic or structure?
+I'd say its the STRUCTURE thats doing the heavy lifting here. The nested while 
+loops ARE the state machine. Each while loop represents a level in the menu.
+Yeah theres if/elif logic for handling choices, but the actual "where am I" 
+state comes from which loop youre sitting in. If you wanted logic-based control
+youd have like a single while loop with a state variable and a big switch 
+statement. This is different - the nesting itself encodes the hierarchy.
+
+===================================================================================
+'''
+
 '''
 OIM 3600 - Menu Navigation Assignment Rubric
 --------------------------------------------
@@ -67,8 +115,8 @@ PORTFOLIO BRANCH IMPLEMENTATION (20 pts)
 
 EXIT-TO-TOP BEHAVIOR (20 pts - A-level feature)
 
-[ ] “Return to Top” works from at least one CLIENT leaf
-[ ] “Return to Top” works from at least one PORTFOLIO leaf
+[ ] "Return to Top" works from at least one CLIENT leaf
+[ ] "Return to Top" works from at least one PORTFOLIO leaf
 [ ] No duplicate menus printed after return
 [ ] No stuck loops after return
 [ ] to_top cleared only at TOP level
@@ -78,7 +126,6 @@ CONTROL FLOW QUALITY (15 pts)
 
 [ ] Correct one-level unwind via break
 [ ] Each loop checks to_top appropriately
-[ ] No unnecessary nested flag logic
 [ ] Code readable and logically structured
 
 
@@ -121,7 +168,13 @@ THIS ASSIGNMENT WILL BE DUE 2/25 (NEXT WEDNESDAY) SO YOU CAN ASK QUESTIONS NEXT 
 
 import functions2 as fn2
 
+# flag for returning directly to top menu from any leaf
+to_top = False
+
 while True:
+    # reset to_top flag at level 1 - this is the ONLY place it gets cleared
+    to_top = False
+    
     fn2.clear_screen()
     fn2.print_header('Top Menu level 1')
     options=['Clients', 'Portfolios'] #level 1 options
@@ -134,6 +187,10 @@ while True:
         break
     elif choice == 1:
         while True:
+            # check if we need to skip back to top
+            if to_top:
+                break
+                
             fn2.clear_screen()
             fn2.print_header('Clients level 2')
             options=['Select Client', 'Create Client'] #level 2 options
@@ -146,6 +203,10 @@ while True:
                 break
             elif choice == 1:
                 while True:
+                    # check if we need to skip back to top
+                    if to_top:
+                        break
+                        
                     fn2.clear_screen()
                     fn2.print_header('Select Client level 3')
                     options=['View Client Summary', 'Manage Client Cash'] #level 3 options
@@ -162,8 +223,12 @@ while True:
                         fn2.print_header('View Client Summary level 4')
                         # no options leaf
                         print('you have reached View Client Summary')
-                        print('returning to level 3') 
-                        fn2.pause(3)
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
                         
                         continue # not needed but shows intent
                            
@@ -173,13 +238,21 @@ while True:
                         fn2.print_header('Manage Client Cash level 4')
                         # no options leaf
                         print('you have reached Manage Client Cash')
-                        print('returning to level 3') 
-                        fn2.pause(3)
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
 
                         continue # not needed but shows intent
 
             elif choice == 2:
                 while True:
+                    # check if we need to skip back to top
+                    if to_top:
+                        break
+                        
                     fn2.clear_screen()
                     fn2.print_header('Create Client level 3')
                     options=['New Individual', 'New Joint'] #level 3 options
@@ -196,8 +269,12 @@ while True:
                         fn2.print_header('New Individual level 4')
                         # no options leaf
                         print('you have reached New Individual')
-                        print('returning to level 3') 
-                        fn2.pause(3)
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
 
                         continue # not needed but shows intent
                            
@@ -207,15 +284,24 @@ while True:
                         fn2.print_header('New Joint level 4')
                         # no options leaf
                         print('you have reached New Joint')
-                        print('returning to level 3') 
-                        fn2.pause(3) 
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1) 
 
                         continue # not needed but shows intent   
     elif choice == 2:
+        # PORTFOLIOS BRANCH (RHS) - mirrors the Clients structure
         while True:
+            # check if we need to skip back to top
+            if to_top:
+                break
+                
             fn2.clear_screen()
-            fn2.print_header('Portfolios level 2')
-            options=['Trade', 'Performance'] #level 2 options
+            fn2.print_header('Portfolios level 2')            
+            options = ['Trade', 'Performance'] #level 2 options
             fn2.display_menu(options)
             choice = fn2.get_menu_choice(options)
 
@@ -225,9 +311,13 @@ while True:
                 break
             elif choice == 1:
                 while True:
+                    # check if we need to skip back to top
+                    if to_top:
+                        break
+                        
                     fn2.clear_screen()
                     fn2.print_header('Trade level 3')
-                    options=['Buy', 'Sell'] #level 3 options
+                    options = ['Buy', 'Sell'] #level 3 options
                     fn2.display_menu(options)
                     choice = fn2.get_menu_choice(options)
 
@@ -240,28 +330,40 @@ while True:
                         fn2.clear_screen()
                         fn2.print_header('Buy level 4')
                         # no options leaf
-                        print('you have reached Buy page')
-                        print('returning to level 3') 
-                        fn2.pause(3)
-                        
+                        print('you have reached Buy')
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
+
                         continue # not needed but shows intent
-                           
+
                     elif choice == 2:
                         # no while statement leaf
                         fn2.clear_screen()
                         fn2.print_header('Sell level 4')
                         # no options leaf
-                        print('you have reached Sell Page')
-                        print('returning to level 3') 
-                        fn2.pause(3)
+                        print('you have reached Sell')
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
 
                         continue # not needed but shows intent
 
             elif choice == 2:
                 while True:
+                    # check if we need to skip back to top
+                    if to_top:
+                        break
+                        
                     fn2.clear_screen()
                     fn2.print_header('Performance level 3')
-                    options=['Holdings Snapshot', 'P/L Report'] #level 3 options
+                    options = ['Holdings Snapshot', 'P/L Report'] #level 3 options
                     fn2.display_menu(options)
                     choice = fn2.get_menu_choice(options)
 
@@ -275,18 +377,52 @@ while True:
                         fn2.print_header('Holdings Snapshot level 4')
                         # no options leaf
                         print('you have reached Holdings Snapshot')
-                        print('returning to level 3') 
-                        fn2.pause(3)
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
 
                         continue # not needed but shows intent
-                           
+
                     elif choice == 2:
                         # no while statement leaf
                         fn2.clear_screen()
                         fn2.print_header('P/L Report level 4')
                         # no options leaf
                         print('you have reached P/L Report')
-                        print('returning to level 3') 
-                        fn2.pause(3) 
+                        # option to return to top menu
+                        go_top = input('\nType "top" to return to main menu, or press Enter for level 3: ')
+                        if go_top.lower() == 'top':
+                            to_top = True
+                            break
+                        fn2.pause(1)
 
-                        continue # not needed but shows intent   
+                        continue # not needed but shows intent
+
+
+'''
+===================================================================================
+PART 4: DISCRETE PATHS
+===================================================================================
+
+There are 8 discrete paths to leaf endpoints:
+
+Clients side (4 paths):
+1. Top -> Clients -> Select Client -> View Client Summary
+2. Top -> Clients -> Select Client -> Manage Client Cash
+3. Top -> Clients -> Create Client -> New Individual
+4. Top -> Clients -> Create Client -> New Joint
+
+Portfolios side (4 paths):
+5. Top -> Portfolios -> Trade -> Buy
+6. Top -> Portfolios -> Trade -> Sell
+7. Top -> Portfolios -> Performance -> Holdings Snapshot
+8. Top -> Portfolios -> Performance -> P/L Report
+
+Plus theres the exit path from the top menu (pressing enter at level 1) but I 
+dont think that counts as a "path through the menu" since youre just leaving.
+
+===================================================================================
+'''
