@@ -1,3 +1,10 @@
+'''
+Nothing submitted:
+
+Grade 0
+
+'''
+
 """
 TIC TAC TOE — FUNCTION SCAFFOLD
 
