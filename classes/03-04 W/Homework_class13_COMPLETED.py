@@ -1,3 +1,70 @@
+'''
+Spencer — Grade: 9 / 10
+Overall evaluation
+
+This is a very strong submission. Spencer clearly understands the core computational ideas behind the program: the shared board state, the role of undoing moves, and the use of canonical board representations to remove symmetry duplicates. The explanations are clear, structured, and show real reasoning about how the program works.
+
+The student also completed all required tasks: defining state, identifying transitions and invariants, replacing TODO docstrings, adding inline comments, explaining a non-obvious part of the program, and interpreting the output.
+
+Strengths
+1. Clear definition of state
+
+The student correctly identifies the major state variables, including the board, counters, and the list of unique terminal boards.
+
+They also correctly recognize that the loop variables represent part of the search state.
+
+This shows good understanding of how the algorithm explores the game tree.
+
+2. Good explanation of transitions
+
+Spencer correctly identifies transitions in:
+
+the nested loops when moves are placed
+undo operations
+functions that update counters and lists
+
+This demonstrates understanding that transitions occur both in the search loops and in helper functions.
+
+3. Strong invariant reasoning
+
+The invariants identified are appropriate:
+
+search stops after a win
+players alternate turns
+moves only placed on empty squares
+unique boards stored in canonical form
+
+These are exactly the structural properties that keep the search valid.
+
+4. Excellent explanation of undoing moves
+
+The explanation of backtracking is particularly strong.
+
+The student recognizes that:
+
+there is only one board object
+moves must be undone to explore different branches
+otherwise previous moves would remain on the board
+
+The analogy of erasing moves on paper is a very clear explanation of the concept.
+
+This is the key conceptual idea in the assignment, and the student explains it well.
+
+5. Accurate interpretation of program output
+
+The explanation of the output numbers is correct:
+
+total full boards
+number of unique terminal boards
+counts of wins and draws
+unique board shapes
+
+This indicates that the student understood what the counters represent.
+
+GRADE 95
+
+'''
+
 """
 Homework: Reading Code with State / Transitions / Invariants (Tic-Tac-Toe)
 
