@@ -1,9 +1,12 @@
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
-PRICES_FILE = "sp100_daily_prices.csv"
-DIVIDENDS_FILE = "sp100_dividends.csv"
-SPLITS_FILE = "sp100_splits.csv"
+BASE_DIR = Path(__file__).parent
+
+PRICES_FILE = BASE_DIR / "sp100_daily_prices.csv"
+DIVIDENDS_FILE = BASE_DIR / "sp100_dividends.csv"
+SPLITS_FILE = BASE_DIR / "sp100_splits.csv"
 
 TOL = 1e-3
 
