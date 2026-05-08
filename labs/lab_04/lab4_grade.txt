@@ -1,0 +1,72 @@
+Lab 4 Grade
+PART 1: CODE — 40 / 50
+Breakdown
+
+Board Setup: 9 / 10
+Good structure:
+number_board
+revealed set
+
+Mine Placement: 10 / 10
+Clean use of random.sample().
+
+Neighbor Counts: 10 / 10
+Correct and well implemented.
+
+User Move Handling: 4 / 5
+Good validation loop, though:
+silently ignores invalid input (matches transcript, but less robust UX)
+
+Reveal Logic (Flood Fill): 0 / 10
+IF YOU CAN SHOW ME THIS BEHAVIOR IN run_game.py I'll Change the grade to an A
+Not implemented — but importantly:
+this is intentional and consistent with transcript
+
+Game Loop & Win Condition: 7 / 5 → capped at 5 / 5
+Clean loop, correct win/loss handling, good structure.
+
+PART 2: CHAT TRANSCRIPT — 42 / 50
+Breakdown
+Game Identification: 5 / 5
+Correctly identifies Minesweeper.
+
+Representation & Design: 12 / 15
+Good:
+mines as set
+revealed as set
+number board
+
+Mine + Count Understanding: 10 / 10
+Clear and correct reasoning.
+
+Reveal Logic (Flood Fill): 10 / 15
+Key point:
+You explicitly investigates and concludes:
+
+“it only revealed that one cell… so no, it doesnt do flood fill”
+
+This is actually good reasoning, even if incorrect relative to the real game. ALSO I 
+DON"T BELIEVE THIS IS TRUE. IF YOU CAN SHOWE ME THIS BEHAVIOR I'LL CHANGE THE GRADE TO AN A
+
+Control of AI: 5 / 5
+Strong:
+you drive exploration
+propose structures
+uses AI to confirm, not generate
+FINAL SCORE: 82 / 100
+GRADE: B
+
+This is a strong and thoughtful submission with clear evidence of independent reasoning.
+
+What you did well
+You actively explored the game behavior before coding
+You proposed and justified your own data structures (mines set, revealed set)
+Your implementation is clean, readable, and logically consistent
+Your transcript shows good control of the AI interaction
+Key issue
+
+You concluded that the game does not implement flood-fill behavior:
+
+“it only revealed that one cell… so no, it doesnt do flood fill”
+
+This is likely due to limited testing. In the original game, blank cells (0 neighbors) trigger expansion.
