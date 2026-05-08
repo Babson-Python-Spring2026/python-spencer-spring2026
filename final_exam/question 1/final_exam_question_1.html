@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Exam Question 1 — Tic Tac Toe Save and Replay</title>
+  <style>
+    :root {
+      --bg: #f6f5f2;
+      --paper: #ffffff;
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d8dee4;
+      --heading: #102a43;
+      --concept: #e8f3ff;
+      --warning: #fff7d6;
+      --requirement: #e8f7ea;
+      --code: #f5f7fa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 22px 80px;
+    }
+    header, section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px 30px;
+      margin-bottom: 20px;
+    }
+    h1, h2, h3 {
+      color: var(--heading);
+      line-height: 1.2;
+    }
+    h1 { margin: 0 0 10px; font-size: 2.2rem; }
+    h2 { margin: 0 0 12px; font-size: 1.45rem; }
+    p, li { font-size: 1.05rem; }
+    .muted { color: var(--muted); }
+    .callout {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+    .concept { background: var(--concept); }
+    .warning { background: var(--warning); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f0f4f8;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Final Exam Question 1 — Tic Tac Toe Save and Replay</h1>
+      <p class="muted">Extend the Tic Tac Toe program from Lab 2 by saving and replaying a completed game.</p>
+    </header>
+
+    <section>
+      <h2>Files Provided</h2>
+      <p>You are given <code>tic_tac_toe_master.py</code>. The game is correct and the code is documented.</p>
+      <div class="callout concept">
+        <strong>AI instruction:</strong> Upload <code>tic_tac_toe_master.py</code> and this problem statement to your AI chat.
+      </div>
+    </section>
+
+    <section>
+      <h2>Your Task</h2>
+
+      <h3>Part 1 — Save the Last Game Played</h3>
+      <p>Modify the existing program so that after a game is played, the program saves enough information to replay that game later.</p>
+      <p>You may choose a representation such as:</p>
+      <ul>
+        <li>a list of moves, or</li>
+        <li>a list of board states.</li>
+      </ul>
+      <div class="callout warning">
+        <strong>Saving only the final board is NOT sufficient.</strong>
+      </div>
+      <p>Save the result in a JSON file.</p>
+
+      <h3>Part 2 — Replay the Saved Game</h3>
+      <p>Write a new program that reads the JSON file and replays the game one move at a time when Enter is pressed.</p>
+    </section>
+
+    <section>
+      <h2>Submission Requirements</h2>
+      <table>
+        <tr><th>Item</th><th>Description</th></tr>
+        <tr><td>Modified Game</td><td>Updated <code>tic_tac_toe_master.py</code> that saves the game</td></tr>
+        <tr><td>Replay Program</td><td>Separate file that replays the game</td></tr>
+        <tr><td>JSON File</td><td>Saved game data</td></tr>
+        <tr><td>Code Comments</td><td>Must be written by you (not AI)</td></tr>
+        <tr><td>AI Transcript</td><td>Shows your design thinking</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Using AI</h2>
+      <ul>
+        <li>Upload <code>tic_tac_toe_master.py</code> and this problem.</li>
+        <li>Use the AI prompt template provided in the separate HTML file.</li>
+        <li>You must drive the design.</li>
+      </ul>
+      <div class="callout concept">
+        <strong>AI helps implement. You do the thinking.</strong>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

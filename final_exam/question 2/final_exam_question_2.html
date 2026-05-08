@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Exam Question 2 — Plus/Minus Target Sum</title>
+  <style>
+    :root {
+      --bg: #f6f5f2;
+      --paper: #ffffff;
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d8dee4;
+      --heading: #102a43;
+      --concept: #e8f3ff;
+      --warning: #fff7d6;
+      --requirement: #e8f7ea;
+      --code: #f5f7fa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 22px 80px;
+    }
+    header, section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px 30px;
+      margin-bottom: 20px;
+    }
+    h1, h2, h3 {
+      color: var(--heading);
+      line-height: 1.2;
+    }
+    h1 { margin: 0 0 10px; font-size: 2.2rem; }
+    h2 { margin: 0 0 12px; font-size: 1.45rem; }
+    p, li { font-size: 1.05rem; }
+    .muted { color: var(--muted); }
+    .callout {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+    .concept { background: var(--concept); }
+    .warning { background: var(--warning); }
+    .requirement { background: var(--requirement); }
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+      font-variant-ligatures: none;
+      font-feature-settings: "liga" 0;
+    }
+    pre {
+      background: var(--code);
+      border: 1px solid #e6eaef;
+      border-radius: 12px;
+      padding: 14px 16px;
+      overflow: auto;
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f0f4f8;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Final Exam Question 2 — Plus/Minus Target Sum</h1>
+      <p class="muted">Search a state space by assigning + or - to each number to reach a target sum.</p>
+    </header>
+
+    <section>
+      <h2>Problem</h2>
+      <p>
+        Given a list of numbers and a target sum, assign either <code>+</code> or <code>-</code> to each number so that the resulting expression equals the target.
+      </p>
+      <p>Each number must be used exactly once.</p>
+      <p>If no assignment works, your program should report that no solution is possible.</p>
+
+      <div class="callout concept">
+        <strong>Example:</strong>
+        <pre>Numbers: [1, 2, 3]
+Target: 4
+
+One solution:
+-1 + 2 + 3 = 4</pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Input Format</h2>
+      <p>Your program should prompt the user as follows:</p>
+      <ul>
+        <li>Enter numbers on one line, separated by spaces</li>
+        <li>Enter the target sum on a separate line</li>
+      </ul>
+
+      <pre>Enter numbers: 1 2 3
+Enter target: 4</pre>
+    </section>
+
+    <section>
+      <h2>State Space Pattern</h2>
+      <p>With <code>n</code> numbers, there are <code>2 ** n</code> possible sign assignments.</p>
+
+      <pre>0  0  0
+1  0  0
+0  1  0
+1  1  0
+0  0  1
+1  0  1
+0  1  1
+1  1  1</pre>
+
+      <p>You may define:</p>
+      <ul>
+        <li><code>0</code> → use <code>-</code></li>
+        <li><code>1</code> → use <code>+</code></li>
+      </ul>
+
+      <div class="callout warning">
+        This shows the state space. A solution is one assignment that reaches the target.
+      </div>
+    </section>
+
+    <section>
+      <h2>Your Task</h2>
+      <ol>
+        <li>Read input from the user</li>
+        <li>Generate sign combinations</li>
+        <li>Check each combination</li>
+        <li>Output a valid expression OR "No solution possible"</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Computational Thinking Expectations</h2>
+      <ul>
+        <li>Identify inputs</li>
+        <li>Define state</li>
+        <li>Define transitions</li>
+        <li>Explain invariants</li>
+        <li>Explain how you explore the state space</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Allowed Python Concepts</h2>
+      <ul>
+        <li>lists, loops, conditionals</li>
+        <li>functions</li>
+        <li>sum()</li>
+      </ul>
+      <div class="callout warning">
+        Do NOT use recursion.
+      </div>
+    </section>
+
+    <section>
+      <h2>Submission Requirements</h2>
+      <table>
+        <tr><th>Item</th><th>Description</th></tr>
+        <tr><td>Program</td><td>Solution code</td></tr>
+        <tr><td>Test cases</td><td>At least one success and one failure</td></tr>
+        <tr><td>Comments</td><td>Written by you</td></tr>
+        <tr><td>AI Transcript</td><td>Shows your thinking</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Using AI</h2>
+      <ul>
+        <li>Upload this problem to AI</li>
+        <li>Use the separate AI prompt template</li>
+        <li>You must drive the design</li>
+      </ul>
+      <div class="callout concept">
+        AI helps implement. You do the thinking.
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

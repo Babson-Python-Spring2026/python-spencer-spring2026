@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Exam AI Prompt Instructions</title>
+  <style>
+    :root {
+      --bg: #f6f5f2;
+      --paper: #ffffff;
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d8dee4;
+      --heading: #102a43;
+      --blue: #e8f3ff;
+      --green: #e8f7ea;
+      --yellow: #fff7d6;
+      --red: #fdecea;
+      --code: #f5f7fa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 22px 80px;
+    }
+    header, section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px 34px;
+      margin-bottom: 22px;
+    }
+    h1, h2, h3 {
+      color: var(--heading);
+      line-height: 1.2;
+    }
+    h1 { margin: 0 0 10px; font-size: 2.2rem; }
+    h2 { margin: 0 0 14px; font-size: 1.55rem; }
+    h3 { margin: 18px 0 8px; font-size: 1.15rem; }
+    p, li { font-size: 1.05rem; }
+    .lede { font-size: 1.12rem; max-width: 85ch; }
+    .muted { color: var(--muted); }
+    .callout {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+    .blue { background: var(--blue); }
+    .green { background: var(--green); }
+    .yellow { background: var(--yellow); }
+    .red { background: var(--red); }
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+      font-variant-ligatures: none;
+      font-feature-settings: "liga" 0;
+    }
+    pre {
+      background: var(--code);
+      border: 1px solid #e6eaef;
+      border-radius: 14px;
+      padding: 18px 20px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.45;
+      font-size: .95rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    th {
+      background: #f0f4f8;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Final Exam: Required AI Prompt Instructions</h1>
+      <p class="lede">You may use AI during the final exam, but the transcript must show that <strong>you</strong> are doing the computational thinking. AI may help you implement, debug, and understand code, but it should not do the design thinking for you.</p>
+      <p class="muted">For each exam problem, you must submit your Python code and your AI chat transcript.</p>
+    </header>
+
+    <section>
+      <h2>Submission Requirements</h2>
+      <table>
+        <tr>
+          <th>Required Item</th>
+          <th>What It Must Show</th>
+        </tr>
+        <tr>
+          <td>Python code for each problem</td>
+          <td>Your code must run and must be manually commented by you. Do not ask AI to add the comments.</td>
+        </tr>
+        <tr>
+          <td>AI chat transcript for each problem</td>
+          <td>The transcript must show that you understood the problem, made thoughtful design decisions, and identified inputs, state, transitions, invariants, and data representation.</td>
+        </tr>
+        <tr>
+          <td>Use of workbook material</td>
+          <td>Your AI-generated code must stay within the Python concepts covered in the foundations workbook, except for the explicitly allowed OOP problem.</td>
+        </tr>
+      </table>
+
+      <div class="callout yellow">
+        <strong>Important:</strong> Before asking AI for help, upload the <strong>Foundations of Programming in Python workbook</strong> to the AI chat. Then tell AI that all code must stay within the concepts covered in that workbook, except for the specific OOP concepts allowed in the shopping cart problem.
+      </div>
+    </section>
+
+    <section>
+      <h2>Required AI Prompt Template</h2>
+      <p>For each exam problem, copy and paste the following prompt into your AI chat. Then paste the exam problem where indicated.</p>
+
+<pre>I am taking a Python final exam. I am allowed to use AI, but I must show that I am doing the computational thinking myself.
+
+Before helping me, confirm that I have uploaded the Foundations of Programming in Python workbook to this chat. Use that workbook as the main limit on what Python concepts may be used.
+
+Important rules:
+
+1. Do not solve the problem until I first explain my thinking.
+
+2. You must first ask me to clearly identify:
+   - inputs
+   - state
+   - transitions
+   - invariants
+   - data representation
+
+3. State space may be discussed if useful, but it is not required for every problem.
+
+4. Do not choose the design for me.
+   - You may ask questions.
+   - You may point out gaps or inconsistencies.
+   - You may suggest alternatives AFTER I explain my design.
+
+5. Use only beginner Python concepts from the uploaded foundations workbook:
+   - variables
+   - strings
+   - lists
+   - tuples
+   - dictionaries
+   - booleans
+   - if / elif / else
+   - for loops
+   - while loops
+   - range
+   - break / continue / pass
+   - functions
+   - basic file reading/writing
+   - JSON
+   - simple imports such as json, random, os, or math if appropriate
+
+6. Object-Oriented Programming is allowed ONLY if the exam problem clearly requires it.
+
+   For the OOP problem, you may use:
+   - class definitions
+   - __init__
+   - instance attributes
+   - methods
+   - __str__
+   - __add__
+   - @property
+   - @&lt;property&gt;.setter
+
+   Do NOT use:
+   - inheritance
+   - advanced OOP patterns
+   - anything not explicitly listed above
+
+7. Do NOT use:
+   - recursion
+   - list comprehensions
+   - lambda
+   - advanced libraries
+   - pandas, numpy, matplotlib, or other external packages
+   - code structures not covered in the workbook or explicitly allowed above
+
+8. After I explain my design, you may help me:
+   - translate my design into code
+   - suggest improvements that stay within my design
+   - debug errors
+   - explain code behavior
+
+9. When you provide code:
+   - Use simple, clear beginner Python
+   - Do NOT include comments in the code
+   <span style="color:red;font-weight:bold">- I will manually comment the code myself after I understand it</span>
+
+10. After giving code, ask me to explain:
+   - what each major part of the code does
+   - how the code connects to state, transitions, and invariants
+   - why the data representation fits the problem
+
+Here is the exam problem:
+
+[PASTE EXAM PROBLEM HERE]
+
+Start by asking me for my design before writing any code.</pre>
+    </section>
+
+    <section>
+      <h2>What a Strong Transcript Should Show</h2>
+      <div class="callout green">
+        <p>A strong transcript shows that you led the solution. AI may help implement the code, but you should be the one making the design decisions.</p>
+      </div>
+      <ul>
+        <li>You explain the problem in your own words.</li>
+        <li>You identify the inputs.</li>
+        <li>You identify the state that changes over time.</li>
+        <li>You describe the transitions that change the state.</li>
+        <li>You identify invariants that must always remain true.</li>
+        <li>You explain your data representation choices.</li>
+        <li>You ask AI to check your reasoning, not replace your reasoning.</li>
+        <li>You can explain the final code in your own words.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Manual Code Comments</h2>
+      <p>Your submitted code must be commented, but the comments must be written by you, not by AI.</p>
+      <div class="callout blue">
+        <p>The purpose of the comments is to show that you understand the code. A useful comment explains why a section of code exists, what state it changes, or how it protects an invariant.</p>
+      </div>
+      <h3>Good comment style</h3>
+<pre># Update the running total after each item is processed.
+# total is part of the state because it changes during the loop.
+total = total + price</pre>
+      <h3>Weak comment style</h3>
+<pre># Add price to total
+total = total + price</pre>
+    </section>
+
+    <section>
+      <h2>Bottom Line</h2>
+      <p>AI may help you write code, but it should not be doing the thinking behind the solution. Your transcript and your manual comments should make your understanding visible.</p>
+    </section>
+  </div>
+</body>
+</html>
