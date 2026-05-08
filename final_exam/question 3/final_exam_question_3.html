@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Exam Question — Shopping Cart OOP Program</title>
+  <style>
+    :root {
+      --bg: #f6f5f2;
+      --paper: #ffffff;
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d8dee4;
+      --heading: #102a43;
+      --blue: #e8f3ff;
+      --green: #e8f7ea;
+      --yellow: #fff7d6;
+      --red: #fdecea;
+      --purple: #f1eaff;
+      --code: #f5f7fa;
+      --table: #f0f4f8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 32px 22px 80px;
+    }
+
+    header, section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px 34px;
+      margin-bottom: 22px;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--heading);
+      line-height: 1.2;
+    }
+
+    h1 { margin: 0 0 10px; font-size: 2.25rem; }
+    h2 { margin: 0 0 14px; font-size: 1.55rem; }
+    h3 { margin: 22px 0 8px; font-size: 1.18rem; }
+    h4 { margin: 16px 0 6px; font-size: 1.05rem; }
+
+    p, li { font-size: 1.05rem; }
+
+    .lede {
+      font-size: 1.13rem;
+      max-width: 88ch;
+    }
+
+    .muted { color: var(--muted); }
+
+    .callout {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+
+    .blue { background: var(--blue); }
+    .green { background: var(--green); }
+    .yellow { background: var(--yellow); }
+    .red { background: var(--red); }
+    .purple { background: var(--purple); }
+
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+      font-variant-ligatures: none;
+      font-feature-settings: "liga" 0;
+    }
+
+    code {
+      background: var(--code);
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+
+    pre {
+      background: var(--code);
+      border: 1px solid #e6eaef;
+      border-radius: 14px;
+      padding: 16px 18px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.45;
+      font-size: .95rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--table);
+      text-align: left;
+    }
+
+    .toc ol {
+      columns: 2;
+      column-gap: 42px;
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    .toc li {
+      break-inside: avoid;
+      margin-bottom: 6px;
+    }
+
+    .todo {
+      border: 2px solid #b6c2d1;
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin: 18px 0;
+      background: #fbfdff;
+    }
+
+    .todo h3 {
+      margin-top: 0;
+    }
+
+    .points {
+      display: inline-block;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: .92rem;
+      color: #334155;
+      background: #eef2f6;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 3px 10px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .diagram {
+      font-family: Consolas, "Courier New", monospace;
+      background: #fafbfc;
+      border: 1px solid #e6eaef;
+      border-left: 5px solid #9fb3c8;
+      border-radius: 10px;
+      padding: 12px 14px;
+      white-space: pre-wrap;
+      overflow: auto;
+      margin: 12px 0 16px;
+    }
+
+    @media (max-width: 850px) {
+      .toc ol { columns: 1; }
+      header, section { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <h1>Final Exam Question — Shopping Cart OOP Program</h1>
+      <p class="lede">
+        In this problem, you will complete a partially written object-oriented Python shopping cart program.
+        The program uses classes, objects, lists, dictionaries, JSON files, menu input, and simple validation.
+      </p>
+      <p>
+        You may use AI, but your submitted chat transcript must show that <strong>you</strong> controlled the design.
+        You must complete the five TODOs in the provided Python file and submit both your completed <code>.py</code>
+        file and your AI transcript.
+      </p>
+      <div class="callout yellow">
+        <strong>Important:</strong> AI may help you implement and debug, but it should not replace your thinking.
+        Your transcript should show that you identified the inputs, state, transitions, invariants, and data representation.
+      </div>
+    </header>
+
+    <section class="toc">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#program-description">Program Description</a></li>
+        <li><a href="#files">Files and Data</a></li>
+        <li><a href="#todo-list">The Five TODOs</a></li>
+        <li><a href="#ai-requirements">AI Use and Transcript Requirements</a></li>
+        <li><a href="#reference">Reference Section</a></li>
+        <li><a href="#representation">Data Representation Summary</a></li>
+        <li><a href="#testing">Suggested Tests</a></li>
+      </ol>
+    </section>
+
+    <section id="program-description">
+      <h2>1. Program Description</h2>
+      <p>
+        The shopping cart program allows a user to load an existing cart or create a new cart.
+        The user can then buy items from the Babson store inventory, view the current cart, checkout, or exit.
+        Shopping carts are stored in a JSON file so that the cart can be reloaded later.
+      </p>
+
+      <h3>General Program Flow</h3>
+      <div class="diagram">Start program
+    ↓
+Load inventory from inventory.json
+    ↓
+Load saved carts from shopping_carts.json
+    ↓
+User loads existing cart or creates new cart
+    ↓
+Repeatedly display cart and menu
+    ↓
+User buys item, checks out, or exits
+    ↓
+Save carts back to shopping_carts.json</div>
+
+      <h3>Classes</h3>
+      <table>
+        <tr>
+          <th>Class</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td><code>ShoppingCart</code></td>
+          <td>Represents one shopping cart. It has a cart name and a list of <code>Item</code> objects.</td>
+        </tr>
+        <tr>
+          <td><code>Item</code></td>
+          <td>Represents one item in a cart. It has quantity, description, and price.</td>
+        </tr>
+      </table>
+
+      <h3>Main Functions and Methods</h3>
+      <table>
+        <tr>
+          <th>Function / Method</th>
+          <th>General Description</th>
+        </tr>
+        <tr>
+          <td><code>ShoppingCart.displayCart()</code></td>
+          <td>Displays the current cart contents.</td>
+        </tr>
+        <tr>
+          <td><code>ShoppingCart.getItemNo()</code></td>
+          <td>Gets and validates the item number selected by the user.</td>
+        </tr>
+        <tr>
+          <td><code>ShoppingCart.getQuantity()</code></td>
+          <td>Gets and validates the quantity selected by the user.</td>
+        </tr>
+        <tr>
+          <td><code>ShoppingCart.buyItem(inventory)</code></td>
+          <td>Lets the user buy an item and updates the cart.</td>
+        </tr>
+        <tr>
+          <td><code>ShoppingCart.checkOut()</code></td>
+          <td>Computes the total amount owed and clears the cart.</td>
+        </tr>
+        <tr>
+          <td><code>Item.__add__(other)</code></td>
+          <td>Combines two compatible items into one item with a combined quantity.</td>
+        </tr>
+        <tr>
+          <td><code>loadInventory()</code></td>
+          <td>Loads inventory from JSON and converts inventory keys from strings to integers.</td>
+        </tr>
+        <tr>
+          <td><code>loadShoppingCarts()</code></td>
+          <td>Loads saved carts from JSON and reconstructs <code>ShoppingCart</code> and <code>Item</code> objects.</td>
+        </tr>
+        <tr>
+          <td><code>storeShoppingCarts(shoppingcarts)</code></td>
+          <td>Converts cart objects back into JSON-compatible dictionaries and writes them to disk.</td>
+        </tr>
+        <tr>
+          <td><code>cartName(shoppingcarts)</code></td>
+          <td>Allows the user to load an existing cart or create a new one.</td>
+        </tr>
+        <tr>
+          <td><code>shoppingMenu()</code></td>
+          <td>Main controller function for the shopping cart program.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="files">
+      <h2>2. Files and Data</h2>
+
+      <h3><code>inventory.json</code></h3>
+      <p>
+        The inventory file contains the store inventory. In the JSON file, the inventory keys are strings such as
+        <code>"1001"</code>, <code>"1002"</code>, and so on. After loading the file, the program converts those keys
+        to integers.
+      </p>
+
+      <pre>{
+  "1001": {
+    "inventory_quantity": 25,
+    "description": "Hooded Sweatshirt",
+    "price": 58.00
+  },
+  "1002": {
+    "inventory_quantity": 25,
+    "description": "Long Sleeve T-Shirt",
+    "price": 28.00
+  }
+}</pre>
+
+      <div class="callout blue">
+        <strong>Representation issue:</strong> JSON object keys are strings. The program converts those keys to integers at runtime
+        because integer keys make the item-number logic clearer.
+      </div>
+
+      <h3><code>shopping_carts.json</code></h3>
+      <p>
+        The initial shopping carts file may be empty:
+      </p>
+
+      <pre>{}</pre>
+
+      <p>
+        After carts are created and items are purchased, the file stores a dictionary where each key is a cart name
+        and each value is a list of item dictionaries.
+      </p>
+
+      <pre>{
+  "bob": [
+    {
+      "quantity": 2,
+      "description": "Hooded Sweatshirt",
+      "price": 58.00
+    }
+  ]
+}</pre>
+    </section>
+
+    <section id="todo-list">
+      <h2>3. The Five TODOs</h2>
+
+      <div class="todo">
+        <h3>TODO 1 — Complete <code>Item.__add__()</code> <span class="points">OOP method</span></h3>
+        <p>
+          Add an <code>__add__</code> method to the <code>Item</code> class.
+          It should combine two compatible item objects.
+        </p>
+        <p>
+          Two items are compatible if they have the same description and the same price.
+          If they are compatible, return a new <code>Item</code> object with the combined quantity.
+          If they are not compatible, raise a <code>ValueError</code>.
+        </p>
+        <pre># Example:
+# Item(2, "Mug", 25.00) + Item(3, "Mug", 25.00)
+# should produce an Item with quantity 5, description "Mug", and price 25.00.</pre>
+        <p><strong>Design rule:</strong> <code>Item.__add__()</code> should know how to combine two item objects, but it should not search the cart.</p>
+      </div>
+
+      <div class="todo">
+        <h3>TODO 2 — Maintain the No-Duplicate-Items Cart Invariant <span class="points">Invariant</span></h3>
+        <p>
+          Modify <code>ShoppingCart.buyItem()</code> so the cart never contains duplicate items with the same description and price.
+        </p>
+        <p>
+          Instead of always appending the new item, search the existing cart:
+        </p>
+        <ul>
+          <li>If the same item is already in the cart, combine the two items using <code>__add__</code>.</li>
+          <li>If the item is not already in the cart, append it normally.</li>
+        </ul>
+        <pre># Cart invariant:
+# The cart should never contain two Item objects
+# with the same description and price.</pre>
+        <p><strong>Design rule:</strong> the cart is responsible for maintaining the no-duplicate-items invariant.</p>
+      </div>
+
+      <div class="todo">
+        <h3>TODO 3 — Complete <code>ShoppingCart.checkOut()</code> <span class="points">State transition</span></h3>
+        <p>
+          Complete the checkout method.
+        </p>
+        <p>
+          It should:
+        </p>
+        <ol>
+          <li>Compute the total amount owed.</li>
+          <li>Display the total.</li>
+          <li>Empty the shopping cart.</li>
+        </ol>
+        <pre># State transition:
+# cart with items  --->  empty cart</pre>
+      </div>
+
+      <div class="todo">
+        <h3>TODO 4 — Complete <code>ShoppingCart.getItemNo()</code> <span class="points">Input validation</span></h3>
+        <p>
+          Complete <code>getItemNo()</code> so it repeatedly asks the user to select an item number from
+          <code>1</code> to <code>10</code>, or enter <code>x</code> to cancel.
+        </p>
+        <p>
+          The inventory menu shown to the user uses item numbers <code>1</code> through <code>10</code>,
+          but the runtime inventory dictionary uses integer keys <code>1001</code> through <code>1010</code>.
+          Your method must transform the user-facing number into the correct inventory key.
+        </p>
+        <pre># Required behavior:
+# - prompt for an item number
+# - if the user enters x, return None
+# - reject invalid input and reprompt
+# - convert a valid choice like 1 into inventory key 1001
+# - return the integer inventory key</pre>
+      </div>
+
+      <div class="todo">
+        <h3>TODO 5 — Answer the Design Questions <span class="points">AI control</span></h3>
+        <p>
+          At the end of the provided Python file, there will be a docstring with numbered spaces for your answers.
+          Answer these questions there. These questions are part of the exam problem.
+        </p>
+
+        <ol>
+          <li>
+            <strong>State:</strong> What is the main state of the shopping cart program?
+            Be specific about which information changes over time.
+          </li>
+          <li>
+            <strong>Transitions:</strong> Which methods change the state of a shopping cart?
+            Briefly explain what each transition does.
+          </li>
+          <li>
+            <strong>Invariant:</strong> What invariant does your completed cart maintain?
+            How does your code preserve that invariant?
+          </li>
+          <li>
+            <strong>Data representation:</strong> Explain the difference between the runtime representation of a shopping cart
+            and the JSON representation stored in <code>shopping_carts.json</code>.
+          </li>
+          <li>
+            <strong>Inventory representation:</strong> Why does the program convert inventory keys from strings to integers
+            when loading <code>inventory.json</code>?
+          </li>
+          <li>
+            <strong>Responsibility:</strong> Why is the duplicate-item search logic placed in <code>ShoppingCart.buyItem()</code>
+            instead of inside <code>Item.__add__()</code>?
+          </li>
+          <li>
+            <strong>AI control:</strong> Give one example where you corrected, limited, tested, or redirected AI output.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="ai-requirements">
+      <h2>4. AI Use and Transcript Requirements</h2>
+      <p>
+        You may use AI to help complete this problem. However, your transcript must show that you were directing
+        the solution.
+      </p>
+
+      <div class="callout red">
+        <strong>Submission requirement:</strong> Submit both your completed Python file and your AI chat transcript.
+      </div>
+
+      <h3>Your Transcript Must Show</h3>
+      <ul>
+        <li>You explained the program in your own words.</li>
+        <li>You identified the state of the shopping cart.</li>
+        <li>You identified the transitions that change that state.</li>
+        <li>You identified at least one invariant.</li>
+        <li>You explained the data representation used by <code>inventory.json</code> and <code>shopping_carts.json</code>.</li>
+        <li>You asked AI focused questions rather than simply asking it to solve the whole problem.</li>
+        <li>You tested the code and corrected mistakes.</li>
+      </ul>
+      <div class="callout blue">
+        <strong>Design questions:</strong> The required written design questions are listed under TODO 5. Answer them in the docstring provided at the end of the Python file.
+      </div>
+    </section>
+
+    <section id="reference">
+      <h2>5. Reference Section</h2>
+
+      <h3><code>class ShoppingCart</code></h3>
+      <p>
+        Represents one shopping cart. A shopping cart has a name and a list of <code>Item</code> objects.
+      </p>
+      <div class="diagram">ShoppingCart
+    name  → string
+    items → list of Item objects</div>
+
+      <h4><code>__init__(self, name)</code></h4>
+      <p>
+        Creates a new empty cart. The cart begins with a name and an empty item list.
+      </p>
+
+      <h4><code>name</code> property</h4>
+      <p>
+        Returns the cart name. The cart name is also used as the key in the <code>shoppingcarts</code> dictionary.
+      </p>
+
+      <h4><code>items</code> property</h4>
+      <p>
+        Returns the list of items currently in the cart. This list is part of the cart's state because it changes
+        when items are bought or when checkout occurs.
+      </p>
+
+      <h4><code>displayCart(self)</code></h4>
+      <p>
+        Displays the current contents of the cart. This method observes state but does not change it.
+      </p>
+
+      <h4><code>getItemNumber(self)</code></h4>
+      <p>
+        Gets a valid item number from the user. The user sees choices <code>1</code> through <code>10</code>,
+        but the inventory dictionary uses keys <code>1001</code> through <code>1010</code>.
+      </p>
+      <div class="diagram">user input: 1
+    ↓
+runtime inventory key: 1001</div>
+
+      <h4><code>getQuantity(self)</code></h4>
+      <p>
+        Gets a positive integer quantity from the user. If the user enters <code>x</code>, the method returns
+        <code>None</code> to signal that buying should be cancelled.
+      </p>
+
+      <h4><code>buyItem(self, inventory)</code></h4>
+      <p>
+        This is a transition method. It changes the cart state by adding an item or by increasing the quantity
+        of an existing item. After TODO 4 is completed, it should preserve the no-duplicate-items invariant.
+      </p>
+
+      <h4><code>checkOut(self)</code></h4>
+      <p>
+        This is a transition method. It computes the total and changes the cart from a cart with items into an empty cart.
+      </p>
+
+      <h3><code>class Item</code></h3>
+      <p>
+        Represents one type of item in the cart.
+      </p>
+      <div class="diagram">Item
+    quantity    → integer
+    description → string
+    price       → float</div>
+
+      <h4><code>__init__(self, quantity, description, price)</code></h4>
+      <p>
+        Creates an item object with a quantity, description, and price.
+      </p>
+
+      <h4><code>__str__(self)</code></h4>
+      <p>
+        Returns a readable string representation of the item.
+      </p>
+
+      <h4><code>__add__(self, other)</code></h4>
+      <p>
+        Combines two compatible items and returns a new item. This supports the cart invariant that duplicate items
+        should be merged rather than stored as separate objects.
+      </p>
+
+      <h3>File and Controller Functions</h3>
+
+      <h4><code>loadInventory()</code></h4>
+      <p>
+        Loads inventory from <code>inventory.json</code>. Because JSON keys are strings, this function converts
+        inventory keys to integers before returning the inventory dictionary.
+      </p>
+
+      <h4><code>displayInventory(inventory)</code></h4>
+      <p>
+        Displays the store inventory to the user. It presents the inventory using menu numbers <code>1</code>
+        through <code>10</code>, even though the runtime inventory keys are <code>1001</code> through <code>1010</code>.
+      </p>
+
+      <h4><code>loadShoppingCarts()</code></h4>
+      <p>
+        Loads <code>shopping_carts.json</code> and reconstructs runtime objects.
+      </p>
+      <div class="diagram">JSON dictionaries/lists
+    ↓
+ShoppingCart objects
+    ↓
+Item objects</div>
+
+      <h4><code>storeShoppingCarts(shoppingcarts)</code></h4>
+      <p>
+        Converts runtime objects into JSON-compatible dictionaries and lists, then saves them.
+      </p>
+      <div class="diagram">ShoppingCart objects
+    ↓
+plain dictionaries/lists
+    ↓
+shopping_carts.json</div>
+
+      <h4><code>cartName(shoppingcarts)</code></h4>
+      <p>
+        Lets the user load an existing cart or create a new cart. It returns one <code>ShoppingCart</code> object.
+      </p>
+
+      <h4><code>shoppingMenu()</code></h4>
+      <p>
+        Main controller. It loads data, lets the user choose a cart, displays the menu, calls cart methods, and
+        saves carts after cart state changes.
+      </p>
+    </section>
+
+    <section id="representation">
+      <h2>6. Data Representation Summary</h2>
+
+      <h3>Runtime Representation</h3>
+      <div class="diagram">shoppingcarts
+    dictionary
+        key: cart name string
+        value: ShoppingCart object
+            name: string
+            items: list of Item objects
+                Item:
+                    quantity: int
+                    description: str
+                    price: float</div>
+
+      <h3>Persistent JSON Representation</h3>
+      <div class="diagram">shopping_carts.json
+    dictionary
+        key: cart name string
+        value: list of item dictionaries
+            item dictionary:
+                quantity
+                description
+                price</div>
+
+      <h3>Important Distinction</h3>
+      <table>
+        <tr>
+          <th>Layer</th>
+          <th>Representation</th>
+          <th>Reason</th>
+        </tr>
+        <tr>
+          <td>JSON file</td>
+          <td>Plain dictionaries and lists</td>
+          <td>JSON can store simple structures, not Python objects.</td>
+        </tr>
+        <tr>
+          <td>Runtime program</td>
+          <td><code>ShoppingCart</code> and <code>Item</code> objects</td>
+          <td>Objects organize behavior and state together.</td>
+        </tr>
+        <tr>
+          <td>Inventory JSON keys</td>
+          <td>Strings such as <code>"1001"</code></td>
+          <td>JSON object keys are strings.</td>
+        </tr>
+        <tr>
+          <td>Runtime inventory keys</td>
+          <td>Integers such as <code>1001</code></td>
+          <td>Integer keys make item-number calculations simpler.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="testing">
+      <h2>7. Suggested Tests</h2>
+      <p>
+        After completing the TODOs, test the following cases.
+      </p>
+
+      <ol>
+        <li>Create a new cart and exit. Reload the cart and confirm it exists.</li>
+        <li>Buy one item with quantity 2. Confirm the cart displays that item.</li>
+        <li>Buy two different items and checkout. Confirm the total is correct.</li>
+        <li>Buy the same item twice. Confirm the cart shows one line with combined quantity.</li>
+        <li>Enter an invalid item number such as <code>0</code>, <code>11</code>, or <code>abc</code>. Confirm the program reprompts.</li>
+        <li>Enter <code>x</code> during item selection or quantity selection. Confirm no partial item is added.</li>
+        <li>Checkout and reload the cart. Confirm the cart is empty.</li>
+      </ol>
+
+      <div class="callout green">
+        <strong>Strong test:</strong> Buy one sweatshirt, then buy another sweatshirt. The cart should not show two sweatshirt lines.
+        It should show one sweatshirt line with the combined quantity.
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computational Thinking Reference: Input, State, Transitions, Invariants, and State Space</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      max-width: 950px;
+      margin: 40px auto;
+      padding: 0 24px;
+      color: #222;
+      background: #fafafa;
+    }
+
+    h1, h2, h3 {
+      color: #1f2937;
+      line-height: 1.25;
+    }
+
+    h1 {
+      border-bottom: 3px solid #1f2937;
+      padding-bottom: 10px;
+    }
+
+    section {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin: 24px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .key-idea {
+      background: #eef6ff;
+      border-left: 5px solid #2563eb;
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+
+    .warning {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+
+    .definition {
+      font-weight: bold;
+      color: #111827;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f3f4f6;
+      text-align: left;
+    }
+
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 1rem;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    .board {
+      font-family: Consolas, Monaco, monospace;
+      font-size: 1.1rem;
+      background: #111827;
+      color: #f9fafb;
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 8px;
+      white-space: pre;
+      margin: 8px 0;
+    }
+
+    .exam-note {
+      background: #ecfdf5;
+      border-left: 5px solid #10b981;
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+
+    .mistake-box {
+      background: #fef2f2;
+      border-left: 5px solid #ef4444;
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+
+    .check-box {
+      background: #f5f3ff;
+      border-left: 5px solid #7c3aed;
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Computational Thinking Reference</h1>
+  <h2>Input, State, Transitions, Invariants, State Space, and Solution</h2>
+
+  <section>
+    <h2>Why These Concepts Matter</h2>
+    <p>
+      Computational thinking means more than writing code. It means understanding a problem as a system:
+      what information is given, what information changes, how it changes, what must remain true, and what
+      counts as a successful result.
+    </p>
+
+    <div class="key-idea">
+      <p>
+        <strong>Main idea:</strong> A correct program starts with valid inputs, represents the changing state clearly,
+        applies valid transitions, preserves invariants, and reaches an acceptable final state.
+      </p>
+    </div>
+
+    <p>
+      In this exam, you may use AI, but you are responsible for the computational thinking. AI can help with
+      implementation, syntax, debugging, and explanation. You must still be able to explain your design choices.
+    </p>
+  </section>
+
+  <section>
+    <h2>Running Example: Tic Tac Toe</h2>
+    <p>
+      We will use Tic Tac Toe to explain the main ideas.
+    </p>
+
+    <p>A Tic Tac Toe board might look like this:</p>
+
+    <div class="board">X | O | X
+---------
+  | X |  
+---------
+O |   |  </div>
+
+    <p>
+      The game begins with an empty board. Players alternate turns. X usually goes first. A game ends when
+      X wins, O wins, or the board is full and no player has won.
+    </p>
+  </section>
+
+  <section>
+    <h2>1. Inputs</h2>
+
+    <p class="definition">
+      Inputs are the information given to the problem that does not change while the program is solving that problem.
+    </p>
+
+    <p>
+      Inputs define the starting conditions, rules, or constraints. They are not the same as state, because inputs
+      usually do not evolve step by step during the computation.
+    </p>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>Possible inputs include:</p>
+    <ul>
+      <li>board size: 3 by 3</li>
+      <li>players: X and O</li>
+      <li>rule that X moves first</li>
+      <li>rule that players alternate turns</li>
+      <li>rule that a player wins with three in a row</li>
+    </ul>
+
+    <div class="key-idea">
+      <p>
+        Separating inputs from state is important because it clarifies what is fixed and what changes.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. State</h2>
+
+    <p class="definition">
+      State is the minimum amount of changing information needed to describe the current situation of the problem.
+    </p>
+
+    <p>
+      State should be sufficient but not unnecessarily large. If the program has the current state, it should have
+      enough information to decide what can happen next.
+    </p>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>The state of a Tic Tac Toe game includes:</p>
+    <ul>
+      <li>the current board</li>
+      <li>whose turn it is</li>
+    </ul>
+
+    <p>For example:</p>
+
+    <div class="board">X | O | X
+---------
+  | X |  
+---------
+O |   |  </div>
+
+    <p>
+      This board alone may not be enough unless we can determine whose turn it is. Usually we can derive that
+      from the number of Xs and Os, but it still belongs in our thinking about state because it determines the next move.
+    </p>
+
+    <div class="exam-note">
+      <p>
+        In your exam answers, explain what information changes over time. That changing information is your state.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Why Separate Inputs from State?</h2>
+
+    <p>
+      Separating inputs from state gives us a clearer focus on transitions.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Concept</th>
+          <th>Question It Answers</th>
+          <th>Tic Tac Toe Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Inputs</td>
+          <td>What is given and fixed?</td>
+          <td>3 by 3 board, X goes first, three in a row wins</td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td>What changes as the problem unfolds?</td>
+          <td>Current board and current player</td>
+        </tr>
+        <tr>
+          <td>Transitions</td>
+          <td>How is the state allowed to change?</td>
+          <td>A player places X or O in an empty square</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="key-idea">
+      <p>
+        Once inputs are separated from state, transitions become easier to identify: transitions are the valid ways
+        the changing information can change.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Transitions</h2>
+
+    <p class="definition">
+      Transitions are the valid operations that change the system from one state to another state.
+    </p>
+
+    <p>
+      A transition takes a current state and produces a new state. In code, a transition often becomes a function,
+      a loop step, a recursive call, or an update to a data structure.
+    </p>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>A transition is one legal move:</p>
+    <ul>
+      <li>X places an X in an empty square</li>
+      <li>O places an O in an empty square</li>
+    </ul>
+
+    <p>Example transition:</p>
+
+    <p>Before:</p>
+    <div class="board">X | O | X
+---------
+  | X |  
+---------
+O |   |  </div>
+
+    <p>O moves in the bottom middle square:</p>
+
+    <p>After:</p>
+    <div class="board">X | O | X
+---------
+  | X |  
+---------
+O | O |  </div>
+
+    <div class="warning">
+      <p>
+        An invalid transition would be placing a mark in an occupied square, allowing the same player to move twice,
+        or continuing the game after someone has already won.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Invariants</h2>
+
+    <p class="definition">
+      Invariants are conditions that must always be true for every valid state of the system.
+    </p>
+
+    <p>
+      Invariants define what makes a state legal or valid. They also help us check whether our transitions are correct.
+      A transition should never produce an invalid state.
+    </p>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>Some Tic Tac Toe invariants are:</p>
+    <ul>
+      <li>Each square is either empty, X, or O.</li>
+      <li>X and O cannot occupy the same square.</li>
+      <li>The number of Xs is either equal to the number of Os or exactly one more than the number of Os.</li>
+      <li>If X goes first, O can never have more moves than X.</li>
+      <li>No moves are allowed after the game has ended.</li>
+    </ul>
+
+    <div class="key-idea">
+      <p>
+        Invariants are not just comments. They are design rules. Good code should be organized so these rules are
+        preserved as the state changes.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. State Space</h2>
+
+    <p class="definition">
+      The state space is the set of all possible valid states that can be reached from the initial state by valid transitions.
+    </p>
+
+    <p>
+      The state space is not just any possible arrangement of symbols. It includes only states that obey the rules
+      and can actually occur through legal transitions.
+    </p>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>
+      The Tic Tac Toe state space includes all valid boards that can occur during a legal game:
+    </p>
+
+    <ul>
+      <li>the empty board</li>
+      <li>boards after one move</li>
+      <li>boards after two moves</li>
+      <li>boards where X wins</li>
+      <li>boards where O wins</li>
+      <li>full boards that end in a tie</li>
+    </ul>
+
+    <p>
+      However, not every board with Xs and Os is part of the valid state space.
+    </p>
+
+    <p>Invalid board example:</p>
+    <div class="board">O | O | O
+---------
+O | X |  
+---------
+X |   |  </div>
+
+    <p>
+      This is invalid if X goes first, because O has too many moves. It violates the invariant about the number of Xs
+      and Os.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. Terminal States</h2>
+
+    <p class="definition">
+      A terminal state is a valid state where the process stops.
+    </p>
+
+    <p>
+      Terminal states are final states. They are not the same as solutions.
+    </p>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>The terminal states are:</p>
+    <ul>
+      <li>X wins</li>
+      <li>O wins</li>
+      <li>the game is a tie</li>
+    </ul>
+
+    <p>Example terminal state where X wins:</p>
+    <div class="board">X | X | X
+---------
+O | O |  
+---------
+  |   |  </div>
+
+    <p>
+      This board is an end state. It tells us the result, but not how the game got there.
+    </p>
+  </section>
+
+  <section>
+    <h2>8. Solution</h2>
+
+    <p class="definition">
+      A solution is an ordered sequence of valid transitions that moves the system from the initial state to a terminal state.
+    </p>
+
+    <p>
+      Equivalently, a solution can be viewed as a path through the state space.
+    </p>
+
+    <div class="warning">
+      <p>
+        A solution is not just the final answer. “X wins” is an outcome. The solution is the sequence of moves that
+        led to that outcome.
+      </p>
+    </div>
+
+    <h3>Tic Tac Toe Example</h3>
+    <p>One solution path might be:</p>
+
+    <pre>Start:
+  |   |  
+---------
+  |   |  
+---------
+  |   |  
+
+1. X moves top left
+2. O moves middle left
+3. X moves top middle
+4. O moves middle middle
+5. X moves top right
+
+End:
+X | X | X
+---------
+O | O |  
+---------
+  |   |  </pre>
+
+    <p>
+      The terminal state is “X wins.” The solution is the ordered sequence of moves that produced that result.
+    </p>
+  </section>
+
+  <section>
+    <h2>Summary Table</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Concept</th>
+          <th>Definition</th>
+          <th>Tic Tac Toe Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Inputs</td>
+          <td>Fixed information given to the problem</td>
+          <td>3 by 3 board, X goes first, three in a row wins</td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td>Changing information needed to describe the current situation</td>
+          <td>Current board and current player</td>
+        </tr>
+        <tr>
+          <td>Transitions</td>
+          <td>Valid ways the state can change</td>
+          <td>A player places a mark in an empty square</td>
+        </tr>
+        <tr>
+          <td>Invariants</td>
+          <td>Rules that must always be true for valid states</td>
+          <td>Players alternate; O cannot have more moves than X; no square has both X and O</td>
+        </tr>
+        <tr>
+          <td>State Space</td>
+          <td>All valid reachable states</td>
+          <td>All legal boards that can occur during a game</td>
+        </tr>
+        <tr>
+          <td>Terminal State</td>
+          <td>A valid state where the process stops</td>
+          <td>X wins, O wins, or tie</td>
+        </tr>
+        <tr>
+          <td>Solution</td>
+          <td>An ordered path of valid transitions from the start to a terminal state</td>
+          <td>A specific move sequence that ends with X winning, O winning, or a tie</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <section>
+    <h2>Common Mistakes to Avoid</h2>
+
+    <div class="mistake-box">
+      <p><strong>These mistakes usually lead to weak designs or confusing code:</strong></p>
+      <ul>
+        <li>Confusing the <strong>state space</strong> with a <strong>solution</strong>.</li>
+        <li>Describing only the <strong>final state</strong> instead of the sequence of transitions that gets there.</li>
+        <li>Including fixed <strong>inputs</strong> as if they were changing state.</li>
+        <li>Defining state that is not minimal, such as storing extra values that can be derived when needed.</li>
+        <li>Forgetting that transitions must preserve invariants.</li>
+        <li>Writing code first and only explaining the state afterward.</li>
+      </ul>
+    </div>
+
+    <h3>Tic Tac Toe Examples</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Weak Statement</th>
+          <th>Better Statement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>“The solution is X wins.”</td>
+          <td>“X wins is a terminal state. A solution is the ordered sequence of moves that leads to X winning.”</td>
+        </tr>
+        <tr>
+          <td>“The state is the rules of Tic Tac Toe.”</td>
+          <td>“The rules are inputs. The state is the current board and whose turn it is.”</td>
+        </tr>
+        <tr>
+          <td>“Any board with Xs and Os is in the state space.”</td>
+          <td>“Only valid, reachable boards are in the state space.”</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Check Yourself Before Coding</h2>
+
+    <div class="check-box">
+      <p><strong>Before you ask AI for code, answer these questions yourself:</strong></p>
+      <ol>
+        <li>What information is fixed input?</li>
+        <li>What information changes over time?</li>
+        <li>What is the minimal state needed to continue solving the problem?</li>
+        <li>What transitions are allowed to change the state?</li>
+        <li>What conditions must always remain true?</li>
+        <li>What are the terminal states?</li>
+        <li>What does a solution path look like?</li>
+      </ol>
+    </div>
+
+    <p>
+      Your AI transcript should show that you controlled these design decisions. AI may help you implement the code,
+      but you are responsible for defining the problem structure.
+    </p>
+  </section>
+
+  <section>
+    <h2>How This Connects to Grading</h2>
+
+    <p>
+      Your grade will depend on more than whether your code runs. A strong answer shows that you understand the
+      computational structure of the problem.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Stronger Submission</th>
+          <th>Weaker Submission</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Clearly identifies inputs, state, transitions, invariants, and terminal states.</td>
+          <td>Only gives code without explaining the structure of the problem.</td>
+        </tr>
+        <tr>
+          <td>Uses comments to explain how the code updates state and preserves invariants.</td>
+          <td>Uses comments only to repeat individual lines of code.</td>
+        </tr>
+        <tr>
+          <td>AI transcript shows the student made design choices and checked assumptions.</td>
+          <td>AI transcript shows the student simply asked AI to solve the whole problem.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Exam Reminder</h2>
+
+    <p>
+      For each exam problem, your submission should make clear:
+    </p>
+
+    <ol>
+      <li>What are the inputs?</li>
+      <li>What is the state?</li>
+      <li>What transitions change the state?</li>
+      <li>What invariants must always be true?</li>
+      <li>What is the state space?</li>
+      <li>What counts as a terminal state?</li>
+      <li>What does a solution look like?</li>
+    </ol>
+
+    <div class="exam-note">
+      <p>
+        Your code should reflect this thinking. Comments should explain not only what the code does, but also how the
+        code represents state, applies transitions, and preserves invariants.
+      </p>
+    </div>
+  </section>
+
+</body>
+</html>
