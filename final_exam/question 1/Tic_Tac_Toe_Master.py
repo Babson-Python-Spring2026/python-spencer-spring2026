@@ -23,6 +23,8 @@ Assume:
 -O is computer
 """
 import os
+import json
+
 def clear_screen():
     # only works in py files    
     os.system("cls" if os.name == "nt" else "clear")
@@ -266,6 +268,10 @@ def play_game() -> None:
     board = create_board()
     x_moves = True
 
+    # state: move_history records every move as a square number (1-9)
+    # the position in the list tells us who moved — even index = X, odd = O
+    move_history = []
+
     while True:
         clear_screen()
         display_board(board)
@@ -283,7 +289,12 @@ def play_game() -> None:
             print("Invalid move. Try again.")
             continue
 
+        # transition: place the mark on the board
         place_move(board, is_valid[1], x_moves)
+
+        # transition: record the square number (1-9) into move history
+        # is_valid[1] is 0-based index, so add 1 to get the square number
+        move_history.append(is_valid[1] + 1)
 
         status = game_over(board)
 
@@ -295,6 +306,19 @@ def play_game() -> None:
                 print("The game is a tie.")
             else:
                 print(status + " wins the game")
+
+            # save the completed game to JSON so we can replay it later
+            # invariant: move_history has every move in order, and result is the final outcome
+            game_data = {
+                "moves": move_history,
+                "result": status
+            }
+
+            save_path = os.path.join(os.path.dirname(__file__), "last_game.json")
+            with open(save_path, "w") as f:
+                json.dump(game_data, f, indent=2)
+
+            print(f"\nGame saved to last_game.json ({len(move_history)} moves)")
 
             break
 

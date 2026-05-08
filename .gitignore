@@ -1,2 +1,12 @@
 /.sync_state.json
 .context/
+__pycache__/
+.factory/
+
+# exam prep files (not for submission)
+final_exam_context/
+granola_fromliz/
+
+# untracked granola notes
+granola/class9.md
+granola/class_april1.md

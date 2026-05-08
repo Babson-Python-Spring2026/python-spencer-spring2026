@@ -49,9 +49,23 @@ class ShoppingCart:
 
 
     def getItemNumber(self):
-        # TODO
-      
-        return 1   # return item_no 
+        # input validation — repeatedly ask until valid item number or x to cancel
+        # user sees items 1-10 but inventory keys are 1001-1010
+        # transition: converts user-facing number into runtime inventory key
+        txt = 'Select an item number (1-10) or x to exit: '
+        while True:
+            try:
+                choice = input(txt)
+                if choice.lower() == 'x':
+                    return None
+                choice = int(choice)
+                if choice < 1 or choice > 10:
+                    raise ValueError
+                # convert user-facing number to inventory key
+                item_no = choice + 1000
+                return item_no
+            except ValueError:
+                txt = 'Invalid choice. Enter a number 1-10 or x to exit: '
     def getQuantity(self):
         txt = 'How many would you like to buy or x to exit: '
         while True:
@@ -86,23 +100,33 @@ class ShoppingCart:
         # Create Item object.
         item = Item(quantity, description, price)
 
-        # Add item to cart.
-        self.items.append(item)
+        # invariant: cart should never have two items with same description and price
+        # search existing cart for a matching item
+        # if found, combine using __add__ and replace the old item
+        # if not found, just append normally
+        found = False
+        for i in range(len(self.items)):
+            if self.items[i].description == item.description and self.items[i].price == item.price:
+                self.items[i] = self.items[i] + item
+                found = True
+                break
 
-        # TODO Maintain the No-Duplicate-Items Cart Invariant
+        if not found:
+            self.items.append(item)
 
     # Compute total cost and empty the cart.
     def checkOut(self):
 
+        # state transition: cart with items -> empty cart
+        # compute total by summing quantity * price for each item
         total = 0
-
-        # TODO Sum the total value of all items.
-        
+        for item in self.items:
+            total = total + (item.quantity * item.price)
 
         print(f'Please pay the sum of ${total:.2f}')
 
-        # TODO Empty the shopping cart after checkout.
-        
+        # clear the cart — transition to empty state
+        self.items = []
 
 
 class Item:
@@ -118,8 +142,12 @@ class Item:
         return f'I have {self.quantity} {self.description} at ${self.price:.2f}'
     
     def __add__(self, other):
-        # TODO
-        pass
+        # combine two compatible items into one with combined quantity
+        # invariant: items must have same description and same price
+        if self.description == other.description and self.price == other.price:
+            return Item(self.quantity + other.quantity, self.description, self.price)
+        else:
+            raise ValueError("Items are not compatible")
 
     # Quantity property.
     @property
@@ -157,7 +185,7 @@ def clear_screen():
 # Load store inventory from JSON file.
 def loadInventory():
 
-    with open(f"C:/PythonClass/{TARGET}/final_exam/inventory.json", "r") as f:
+    with open(os.path.join(os.path.dirname(__file__), "inventory.json"), "r") as f:
         inventory = json.load(f)
 
     inventory_int_keys = {}
@@ -187,7 +215,7 @@ def displayInventory(inventory):
 # Load shopping carts from JSON and reconstruct objects.
 def loadShoppingCarts():
 
-    with open(f"C:/PythonClass/{TARGET}/final_exam/inventory.json", "r") as f:
+    with open(os.path.join(os.path.dirname(__file__), "shopping_carts.json"), "r") as f:
         carts = json.load(f)
 
     # Dictionary that will contain ShoppingCart objects.
@@ -234,7 +262,7 @@ def storeShoppingCarts(shoppingcarts):
 
         carts[key] = items
 
-    with open(f"C:/PythonClass/{TARGET}/final_exam/inventory.json", "r") as f:
+    with open(os.path.join(os.path.dirname(__file__), "shopping_carts.json"), "w") as f:
         json.dump(carts, f, indent=2)
 
 
@@ -340,30 +368,62 @@ shoppingMenu()
 TODO
 1) State: What is the main state of the shopping cart program? Be specific about which information changes over time.
 
+The main state is the shopping cart's list of Item objects. This list changes when the user
+buys an item (an Item is added or an existing Item's quantity increases) and when the user
+checks out (the list gets emptied). The shoppingcarts dictionary also changes when new carts
+are created or existing ones are updated. The inventory does not change — it is fixed input.
 
 
 2) Transitions: Which methods change the state of a shopping cart? Briefly explain what each transition does.
 
+buyItem() — adds a new item to the cart or merges it with an existing item that has the
+same description and price. This changes the items list.
+checkOut() — computes the total cost and then empties the items list. The cart goes from
+having items to being empty.
 
 
 3) Invariant: What invariant does your completed cart maintain? How does your code preserve that invariant?
 
+The cart never contains two Item objects with the same description and same price. In buyItem,
+before appending, I search the existing items list. If I find a match, I use __add__ to combine
+the quantities into one Item and replace the old one. If no match, I append normally. This
+means duplicates are merged at the point of entry — they can never accumulate.
 
 
 4) Data representation: Explain the difference between the runtime representation of a shopping cart and the JSON representation stored in shopping_carts.json.
 
+At runtime, a shopping cart is a ShoppingCart object containing a list of Item objects. Each
+Item has quantity, description, and price as attributes with properties and setters. In JSON,
+carts are stored as a dictionary where each key is a cart name and each value is a list of
+plain dictionaries with "quantity", "description", and "price" keys. JSON can only store simple
+types (strings, numbers, lists, dicts) so the objects have to be converted to dicts for saving
+and rebuilt into objects when loading.
 
 
 5) Inventory representation: Why does the program convert inventory keys from strings to integers when loading inventory.json?
 
+JSON object keys are always strings, so the keys come in as "1001", "1002", etc. The program
+converts them to integers because integer keys make the item-number math simpler. The user
+enters 1-10, and we add 1000 to get the inventory key (1001-1010). If the keys stayed as
+strings we'd have to convert to string every time we look something up, which is messier.
 
 
 6) Responsibility: Why is the duplicate-item search logic placed in ShoppingCart.buyItem() instead of inside Item.__add__()?
 
+Item.__add__ only knows how to combine two items — it checks if they're compatible and returns
+a new Item with the combined quantity. It doesn't know anything about the cart or what other
+items are in it. The search logic (finding the duplicate in the cart) belongs in buyItem because
+the cart owns the items list. The cart is responsible for maintaining its own invariant, just
+like how in class the School enforced no-duplicate-IDs, not the Student.
 
 
 7) AI control: Give one example where you corrected, limited, tested, or redirected AI output.
 
+When AI first gave me the buyItem code, it just appended the new item without checking for
+duplicates. I told it that wasnt right because the invariant says no duplicate items in the
+cart. I explained that it needed to search the existing items first and use __add__ to merge
+if a match was found. I had to specify the loop structure myself — iterate through self.items,
+check description and price, and replace with the combined item if matched.
 
 '''
 
